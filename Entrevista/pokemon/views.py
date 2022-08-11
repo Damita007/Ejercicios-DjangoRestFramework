@@ -3,10 +3,11 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Tipo, Personaje
-from .serializers import TipoListSerializer, PersonajeListSerializer
+from .serializers import TipoListSerializer, PersonajeListSerializer, PersonajeSerializer
 
 # Create your views here.
 class RegisterTipoView(APIView):
+
 
     def post(self, request):
         data = request.data
@@ -16,6 +17,7 @@ class RegisterTipoView(APIView):
         return Response({'Tipo de personaje creado exitosamente'}, status = status.HTTP_200_OK)
 
 class RegisterTipoDetailView(APIView):
+
 
     def get(self, request, pk=None):
         tipo = Tipo.objects.get(id = pk)
@@ -32,19 +34,20 @@ class RegisterTipoDetailView(APIView):
 
 class RegisterPersonajeView(APIView):
 
+
     def get(self, request):
         personajes = Personaje.objects.all()
         personaje_serializer = PersonajeListSerializer(personajes, many=True)
         return Response({'mensaje':'lista de personajes','data':personaje_serializer.data}, status = status.HTTP_200_OK)
 
     def post(self, request):
-        data = request.data
-        personaje_serializer = PersonajeListSerializer(data=data)
-        personaje_serializer.is_valid()
+        personaje_serializer = PersonajeSerializer(data=request.data)
+        personaje_serializer.is_valid(raise_exception=True)
         personaje_serializer.save()
         return Response({'Personaje creado exitosamente'}, status = status.HTTP_200_OK)
         
 class RegisterPersonajeDetailView(APIView):
+
 
     def get(self, request, pk=None):
         personaje = Personaje.objects.get(id = pk)

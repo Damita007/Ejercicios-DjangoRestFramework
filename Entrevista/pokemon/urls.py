@@ -6,10 +6,10 @@ urlpatterns = [
 
     path('type/', views.RegisterTipoView.as_view(), name='type'),
 
-    path('<int:pk>/', views.RegisterTipoDetailView.as_view()),
+    path('type/<int:pk>/', views.RegisterTipoDetailView.as_view()),
 
     path('pokemon/', views.RegisterPersonajeView.as_view(), name='pokemon'),
 
-    path('<int:pk>/', views.RegisterPersonajeDetailView.as_view()),
+    path('pokemon/<int:pk>/', views.RegisterPersonajeDetailView.as_view()),
 
 ]
